@@ -323,10 +323,25 @@ nav ul li a {
     display: flex;
     align-items: center;
     gap: 10px;
+    min-width: 300px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .bildirim i {
     font-size: 20px;
+}
+
+.bildirim.success {
+    background-color: rgba(76, 175, 80, 0.9);
+}
+
+.bildirim.error {
+    background-color: rgba(244, 67, 54, 0.9);
+}
+
+.bildirim.warning {
+    background-color: rgba(255, 152, 0, 0.9);
 }
 
 @keyframes slideIn {
@@ -347,4 +362,86 @@ nav ul li a {
     to {
         opacity: 0;
     }
+}
+
+/* Ödeme Formu Stilleri */
+#odeme-formu {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#odeme-formu h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-row .form-grup {
+    flex: 1;
+}
+
+#odeme-formu input,
+#odeme-formu textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+#odeme-formu input:focus,
+#odeme-formu textarea:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+#odeme-formu label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.odeme-btn {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 1rem;
+}
+
+.odeme-btn:hover {
+    background-color: #45a049;
+}
+
+.odeme-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Kredi Kartı Görsel Efektleri */
+#kart-numarasi {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="%23ccc" d="M528 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zM48 64h480c8.8 0 16 7.2 16 16v48H32V80c0-8.8 7.2-16 16-16zm480 384H48c-8.8 0-16-7.2-16-16V224h512v208c0 8.8-7.2 16-16 16zm-336-84v8c0 6.6-5.4 12-12 12h-72c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12zm192 0v8c0 6.6-5.4 12-12 12H236c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h156c6.6 0 12 5.4 12 12z"/></svg>');
+    background-position: 98% center;
+    background-repeat: no-repeat;
+    background-size: 24px;
+    padding-right: 40px;
 } 

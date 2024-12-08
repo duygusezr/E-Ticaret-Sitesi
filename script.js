@@ -169,21 +169,30 @@ document.getElementById('kullanici-durum').addEventListener('click', function() 
 // Bildirim göster
 function bildirimGoster(mesaj, tur = 'success') {
     const bildirim = document.createElement('div');
-    bildirim.className = 'bildirim';
+    bildirim.className = `bildirim ${tur}`;
     
     let icon = 'check-circle';
     if (tur === 'error') icon = 'times-circle';
-    if (tur === 'warning') icon = 'exclamation-circle';
+    if (tur === 'warning') icon = 'exclamation-triangle';
     
     bildirim.innerHTML = `
         <i class="fas fa-${icon}"></i>
         <span>${mesaj}</span>
     `;
     
+    // Önceki bildirimleri temizle
+    const eskiBildirimler = document.querySelectorAll('.bildirim');
+    eskiBildirimler.forEach(bildirim => bildirim.remove());
+    
     document.body.appendChild(bildirim);
     
+    // Bildirime tıklandığında kapat
+    bildirim.addEventListener('click', () => bildirim.remove());
+    
     setTimeout(() => {
-        bildirim.remove();
+        if (bildirim.parentElement) {
+            bildirim.remove();
+        }
     }, 3000);
 }
 
@@ -272,14 +281,14 @@ function tumUrunleriYukle(gosterilecekUrunler = urunler) {
 // Sepete ürün ekle
 function sepeteEkle(urunId) {
     if (!girisYapildi) {
-        alert('Ürün eklemek için önce giriş yapmalısınız!');
+        bildirimGoster('Ürün eklemek için önce giriş yapmalısınız!', 'warning');
         return;
     }
     const urun = urunler.find(u => u.id === urunId);
     if (urun) {
         sepet.push(urun);
         sepetGuncelle();
-        alert('Ürün sepete eklendi!');
+        bildirimGoster(`${urun.isim} sepete eklendi! <i class="fas fa-shopping-cart"></i>`, 'success');
     }
 }
 
@@ -386,4 +395,91 @@ document.addEventListener('DOMContentLoaded', function() {
             urunleriFiltrele(kategori);
         });
     });
+});
+
+// Ödeme formunu göster/gizle
+document.getElementById('odeme-btn').addEventListener('click', function() {
+    if (sepet.length === 0) {
+        bildirimGoster('Sepetiniz boş! Ödeme yapmak için sepete ürün ekleyin.', 'warning');
+        return;
+    }
+    document.getElementById('odeme-formu').classList.remove('gizle');
+    this.classList.add('gizle');
+});
+
+// Kredi kartı numarası formatla
+document.getElementById('kart-numarasi').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    let formattedValue = '';
+    for (let i = 0; i < value.length; i++) {
+        if (i > 0 && i % 4 === 0) {
+            formattedValue += ' ';
+        }
+        formattedValue += value[i];
+    }
+    e.target.value = formattedValue;
+});
+
+// Son kullanma tarihi formatla
+document.getElementById('son-kullanma').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    let formattedValue = '';
+    if (value.length > 0) {
+        formattedValue = value.substr(0, 2);
+        if (value.length > 2) {
+            formattedValue += '/' + value.substr(2, 2);
+        }
+    }
+    e.target.value = formattedValue;
+});
+
+// CVV sadece rakam
+document.getElementById('cvv').addEventListener('input', function(e) {
+    e.target.value = e.target.value.replace(/\D/g, '');
+});
+
+// Ödeme formunu işle
+document.getElementById('odeme-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Form verilerini al
+    const kartNo = document.getElementById('kart-numarasi').value;
+    const sonKullanma = document.getElementById('son-kullanma').value;
+    const cvv = document.getElementById('cvv').value;
+    const kartSahibi = document.getElementById('kart-sahibi').value;
+    const adres = document.getElementById('adres').value;
+
+    // Basit doğrulama
+    if (kartNo.length < 19 || sonKullanma.length < 5 || cvv.length < 3 || !kartSahibi || !adres) {
+        bildirimGoster('Lütfen tüm alanları doğru formatta doldurun!', 'error');
+        return;
+    }
+
+    // Ödeme simülasyonu
+    const odemeDugmesi = this.querySelector('button[type="submit"]');
+    odemeDugmesi.disabled = true;
+    odemeDugmesi.textContent = 'İşleminiz Gerçekleştiriliyor...';
+
+    setTimeout(() => {
+        // Başarılı ödeme simülasyonu
+        bildirimGoster('Ödemeniz başarıyla gerçekleşti! Siparişiniz hazırlanıyor.', 'success');
+        
+        // Sepeti temizle
+        sepet = [];
+        sepetGuncelle();
+        
+        // Formu sıfırla ve gizle
+        this.reset();
+        document.getElementById('odeme-formu').classList.add('gizle');
+        document.getElementById('odeme-btn').classList.remove('gizle');
+        
+        // Düğmeyi normale döndür
+        odemeDugmesi.disabled = false;
+        odemeDugmesi.textContent = 'Ödemeyi Tamamla';
+        
+        // Ana sayfaya yönlendir
+        setTimeout(() => {
+            sayfaGoster('anasayfa');
+        }, 2000);
+    }, 2000);
 }); 

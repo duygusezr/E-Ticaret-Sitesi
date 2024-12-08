@@ -78,6 +78,35 @@
             <div class="sepet-toplam">
                 Toplam: <span id="toplam-fiyat">0</span> TL
             </div>
+            <div id="odeme-formu" class="gizle">
+                <h3>Ödeme Bilgileri</h3>
+                <form id="odeme-form">
+                    <div class="form-grup">
+                        <label for="kart-numarasi">Kart Numarası:</label>
+                        <input type="text" id="kart-numarasi" maxlength="19" placeholder="1234 5678 9012 3456" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-grup">
+                            <label for="son-kullanma">Son Kullanma Tarihi:</label>
+                            <input type="text" id="son-kullanma" maxlength="5" placeholder="AA/YY" required>
+                        </div>
+                        <div class="form-grup">
+                            <label for="cvv">CVV:</label>
+                            <input type="text" id="cvv" maxlength="3" placeholder="123" required>
+                        </div>
+                    </div>
+                    <div class="form-grup">
+                        <label for="kart-sahibi">Kart Sahibinin Adı:</label>
+                        <input type="text" id="kart-sahibi" placeholder="Ad Soyad" required>
+                    </div>
+                    <div class="form-grup">
+                        <label for="adres">Teslimat Adresi:</label>
+                        <textarea id="adres" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="odeme-btn">Ödemeyi Tamamla</button>
+                </form>
+            </div>
+            <button id="odeme-btn" class="odeme-btn">Ödemeye Geç</button>
         </section>
     </main>
 
