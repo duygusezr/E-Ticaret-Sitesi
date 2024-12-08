@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Ticaret Mağazası</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="giris-modal" class="modal">
+        <div class="modal-icerik">
+            <h2>Kullanıcı Girişi</h2>
+            <form id="giris-form">
+                <div class="form-grup">
+                    <label for="kullanici">Kullanıcı Adı:</label>
+                    <input type="text" id="kullanici" required>
+                </div>
+                <div class="form-grup">
+                    <label for="sifre">Şifre:</label>
+                    <input type="password" id="sifre" required>
+                </div>
+                <button type="submit">Giriş Yap</button>
+            </form>
+        </div>
+    </div>
+
+    <header>
+        <nav>
+            <div class="logo">E-Mağaza</div>
+            <ul>
+                <li><a href="#anasayfa" class="nav-link" data-sayfa="anasayfa">Ana Sayfa</a></li>
+                <li><a href="#urunler" class="nav-link" data-sayfa="urunler">Ürünler</a></li>
+                <li><a href="#sepet" class="nav-link" data-sayfa="sepet">Sepet (<span id="sepet-sayisi">0</span>)</a></li>
+                <li><span id="kullanici-durum" class="kullanici-menu">Giriş Yap</span></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="anasayfa" class="sayfa">
+            <h2>Çok Satan Ürünler</h2>
+            <div class="cok-satanlar urun-listesi">
+                <!-- Çok satan ürünler buraya eklenecek -->
+            </div>
+        </section>
+
+        <section id="urunler" class="sayfa gizle">
+            <h2>Tüm Ürünler</h2>
+            <div class="filtre-siralama">
+                <div class="kategori-filtrele">
+                    <button class="kategori-btn aktif" data-kategori="hepsi">Hepsi</button>
+                    <button class="kategori-btn" data-kategori="telefon">Telefonlar</button>
+                    <button class="kategori-btn" data-kategori="bilgisayar">Bilgisayarlar</button>
+                    <button class="kategori-btn" data-kategori="tv">Televizyonlar</button>
+                    <button class="kategori-btn" data-kategori="konsol">Oyun & Konsollar</button>
+                    <button class="kategori-btn" data-kategori="aksesuar">Aksesuarlar</button>
+                    <button class="kategori-btn" data-kategori="ev">Ev Aletleri</button>
+                </div>
+                <div class="siralama">
+                    <select id="siralama-select">
+                        <option value="varsayilan">Varsayılan Sıralama</option>
+                        <option value="artan">Fiyat (Düşükten Yükseğe)</option>
+                        <option value="azalan">Fiyat (Yüksekten Düşüğe)</option>
+                        <option value="isim-a-z">İsim (A-Z)</option>
+                        <option value="isim-z-a">İsim (Z-A)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="tum-urunler urun-listesi">
+                <!-- Ürünler JavaScript ile buraya eklenecek -->
+            </div>
+        </section>
+
+        <section id="sepet" class="sayfa gizle">
+            <h2>Sepetim</h2>
+            <div id="sepet-urunler"></div>
+            <div class="sepet-toplam">
+                Toplam: <span id="toplam-fiyat">0</span> TL
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html> 
