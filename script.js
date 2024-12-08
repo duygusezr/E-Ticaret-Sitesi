@@ -166,6 +166,27 @@ document.getElementById('kullanici-durum').addEventListener('click', function() 
     }
 });
 
+// Bildirim göster
+function bildirimGoster(mesaj, tur = 'success') {
+    const bildirim = document.createElement('div');
+    bildirim.className = 'bildirim';
+    
+    let icon = 'check-circle';
+    if (tur === 'error') icon = 'times-circle';
+    if (tur === 'warning') icon = 'exclamation-circle';
+    
+    bildirim.innerHTML = `
+        <i class="fas fa-${icon}"></i>
+        <span>${mesaj}</span>
+    `;
+    
+    document.body.appendChild(bildirim);
+    
+    setTimeout(() => {
+        bildirim.remove();
+    }, 3000);
+}
+
 // Giriş formunu işle
 document.getElementById('giris-form').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -178,9 +199,9 @@ document.getElementById('giris-form').addEventListener('submit', function(e) {
         document.getElementById('giris-modal').classList.add('gizle');
         document.getElementById('kullanici-durum').textContent = `Hoş geldin, ${kullaniciAdi} (Çıkış)`;
         sayfaGoster('anasayfa');
-        alert('Başarıyla giriş yaptınız!');
+        bildirimGoster('Başarıyla giriş yaptınız! Hoş geldiniz.');
     } else {
-        alert('Kullanıcı adı veya şifre hatalı!');
+        bildirimGoster('Kullanıcı adı veya şifre hatalı!', 'error');
     }
 });
 
@@ -192,7 +213,7 @@ function cikisYap() {
     document.getElementById('sifre').value = '';
     sepet = []; // Sepeti temizle
     sepetGuncelle();
-    alert('Çıkış yapıldı!');
+    bildirimGoster('Başarıyla çıkış yaptınız!', 'warning');
 }
 
 // Çok satan ürünleri yükle
